@@ -1,7 +1,24 @@
-const img = document.getElementById("galerie");
-
-
-
 fetch("http://localhost:5678/api/works")
     .then(reponse => reponse.json())
-    .then(reponse2 => console.log(reponse2[0].title))
+    .then(data => {
+        
+        
+        const galerieEL = document.getElementById("galerie");
+
+        index = 0;
+
+        for (let imageUrl of data){
+            let NewFigure = document.createElement("figure");
+            NewFigure.innerHTML = `
+            <img src = "${data[index].imageUrl}">
+            <figcaption>${data[index].title}</figcaption>
+            `;
+            index++;
+
+            galerieEL.appendChild(NewFigure);
+        }
+        
+    })
+
+
+
