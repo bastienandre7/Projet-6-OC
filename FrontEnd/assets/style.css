@@ -95,7 +95,7 @@ nav li {
 	font-size: 1.2em;
 }
 
-li:hover {
+a:hover {
 	color: #B1663C;
 }
 #introduction {
@@ -214,3 +214,52 @@ footer nav ul {
 	cursor: pointer;
 }
 
+/* Log In */
+
+.nav {
+	padding: 0 10px;
+	font-size: 1.2em;
+	text-decoration: none;
+	color: black;
+}
+
+.login {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
+.titre_login{
+	padding: 100px;
+}
+
+.mail{
+	padding-top: 30px;
+}
+
+.mdp{
+	padding-top: 20px;
+}
+
+.btn_connecter{
+	margin-top: 20px;
+	width: 200px;
+	display: flex;
+	justify-content: center;
+	margin-left: 41%;
+	background-color: #1D6154;
+	color: white;
+	font-family: 'Syne';
+	border-width: 0px;
+	border-radius: 20px;
+	padding: 10px;
+}
+
+.mdp_oublie{
+	padding-top: 20px;
+	text-decoration: solid;
+}
+
+.mention_lgl{
+	display: flex;
+}

@@ -9,16 +9,15 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
-	<script src="/FrontEnd/assets/script.js"></script>
 </head>
 <body>
 <header>
 	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
 	<nav>
 		<ul>
-			<li>projets</li>
-			<li>contact</li>
-			<li>login</li>
+			<a class="nav">projets</a>
+			<a class="nav">contact</a>
+			<a class="nav" href="/FrontEnd/login.html">login</a>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -38,10 +37,10 @@
 	<section id="portfolio">
 		<h2>Mes Projets</h2>
 		<div class="filtres">
-			<button class="boutons">Tous</button>
-			<button class="boutons">Objets</button>
-			<button class="boutons">Appartements</button>
-			<button class="boutons">Hôtels & restaurants</button>
+			<button class="boutons" id="btnTous">Tous</button>
+			<button class="boutons" id="btnObj">Objets</button>
+			<button class="boutons" id="btnAppart">Appartements</button>
+			<button class="boutons" id="btnHotel">Hôtels & restaurants</button>
 		</div>
 		<div class="gallery" id="galerie"></div>
 	</section>
@@ -68,4 +67,5 @@
 	</nav>
 </footer>
 </body>
+	<script src="/FrontEnd/assets/script.js"></script>
 </html>
