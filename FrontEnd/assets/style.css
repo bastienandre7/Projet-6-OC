@@ -230,19 +230,11 @@ footer nav ul {
 }
 
 .titre_login{
-	padding: 100px;
-}
-
-.mail{
-	padding-top: 30px;
-}
-
-.mdp{
-	padding-top: 20px;
+	padding: 50px;
 }
 
 .btn_connecter{
-	margin-top: 20px;
+	margin-top: 50px;
 	width: 200px;
 	display: flex;
 	justify-content: center;
@@ -253,13 +245,17 @@ footer nav ul {
 	border-width: 0px;
 	border-radius: 20px;
 	padding: 10px;
+	cursor: pointer;
 }
 
 .mdp_oublie{
 	padding-top: 20px;
 	text-decoration: solid;
+	cursor: pointer;
 }
 
 .mention_lgl{
-	display: flex;
+	position: absolute;
+	bottom: 5%;
+	right: 5%;
 }
