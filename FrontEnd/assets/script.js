@@ -4,31 +4,40 @@ const btnAppartEl = document.getElementById("btnAppart");
 const btnHotelEl = document.getElementById("btnHotel");
 
 
+let worksData = [];
 
-fetch("http://localhost:5678/api/works")
+const fetchWorks = async () => {
+    await fetch("http://localhost:5678/api/works")
     .then(reponse => reponse.json())
-    .then(data => {
-        
-        
-        const galerieEL = document.getElementById("galerie");
+    .then(data => worksData = data);
+};
 
-        index = 0;
+const displayTous = async () => {
+    await fetchWorks();
 
-        for (let imageUrl of data){
-            let NewFigure = document.createElement("figure");
-            NewFigure.innerHTML = `
-            <img src = "${data[index].imageUrl}">
-            <figcaption>${data[index].title}</figcaption>
-            `;
-            index++;
+    const galerieEL = document.getElementById("galerie");
 
-            galerieEL.appendChild(NewFigure);
-        }
-        
-    });
+    index = 0;
+
+    for (let imageUrl of worksData){
+        let NewFigure = document.createElement("figure");
+        NewFigure.innerHTML = `
+        <img src = "${worksData[index].imageUrl}">
+        <figcaption>${worksData[index].title}</figcaption>
+        `;
+        index++;
+
+        galerieEL.appendChild(NewFigure);
+    }
+}
+
+displayTous();
+
+
+
 
 btnTousEl.addEventListener("click", function(){
-    
+    displayTous();
 });
 
 
