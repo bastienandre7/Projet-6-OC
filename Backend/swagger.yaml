@@ -11,7 +11,7 @@ paths:
       summary: Log In the user.
       requestBody:
         required: true
-        content:
+        content: 
           application/json:
             schema:
               type: object
