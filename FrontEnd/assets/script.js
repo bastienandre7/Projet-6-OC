@@ -198,3 +198,25 @@ btnHotelEl.addEventListener("click", function(){
     btnHotelVert();
 });
 
+// MODALE
+
+const modaleEl = async () => {
+    await fetchWorks();
+
+    const modaleEL = document.getElementById("img-modale");
+
+    index = 0;
+
+    for (let imageUrl of worksData){
+        let NewFigure = document.createElement("figure");
+        NewFigure.innerHTML = `
+        <img src = "${worksData[index].imageUrl}" class="image-modale">
+        <p>éditer</p>
+        `;
+        index++;
+
+        modaleEL.appendChild(NewFigure);
+    }
+};
+
+modaleEl();

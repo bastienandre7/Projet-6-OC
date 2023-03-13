@@ -223,6 +223,10 @@ footer nav ul {
 	color: black;
 }
 
+.btn-login {
+	display: none;
+}
+
 .login {
 	display: flex;
 	flex-direction: column;
@@ -266,4 +270,52 @@ footer nav ul {
 	position: absolute;
 	bottom: 5%;
 	right: 5%;
+}
+
+.classe_erreur{
+	display: flex;
+	justify-content: center;
+	font-size: large;
+	color: white;
+	background-color: red;
+	padding: 20px;
+}
+
+/* Modale */
+
+.liens-modifier{
+	display: flex;
+	justify-content: center;
+}
+
+.display-modifier{
+	padding-left: 20px;
+	padding-top: 7px;
+	font-size: large;
+}
+
+.btnmodal{
+	text-decoration: none;
+	color: black;
+}
+
+.modal{
+	display: flex;
+	justify-content: center;
+}
+
+.modal-wrapper{
+	width: 600px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.display-img{
+	display: flex;
+}
+
+.image-modale{
+	width: 70px;
+	height: 100px;
 }

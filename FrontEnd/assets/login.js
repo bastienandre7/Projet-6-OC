@@ -9,6 +9,20 @@ form.addEventListener('submit', async function(e){
     const response = await login(data);
     const user = await response.json();
     console.log(user);
+    
+    if(response.status === 404 || response.status === 401){
+        const erreur = document.getElementById("erreur");
+        erreur.innerHTML = `<p>Adresse E-mail ou Mot de passe incorrect</p>`;
+        erreur.classList.add("classe_erreur");
+        setTimeout(() => {
+        },5000)
+        return;
+    }
+
+    if(response.status === 200){
+        sessionStorage.setItem("user", user.token);
+        window.location.assign("logged.html")
+    }
 
 
 });
@@ -29,3 +43,4 @@ const login = async (data) =>{
         body: JSON.stringify(user)
     })
 };
+
