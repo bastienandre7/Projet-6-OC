@@ -39,17 +39,41 @@
             <h2>Mes Projets</h2>
             <div class="display-modifier">
                 <i class="fa-regular fa-pen-to-square"></i>
-                <a href="#modalid" class="btnmodal">modifier</a>
+                <a id="btn-modif" href="#modal1" class="btnmodal">modifier</a>
             </div>
         </div>
 
-        <aside id="modalid" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal">
-            <div class="modal-wrapper">
+        <aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal" style="display: none;">
+            <div class="modal-wrapper" style="display: flex;">
+				<i class="fa-solid fa-xmark fa-2x close"></i>
                 <h3 id="titlemodal">Galerie photo</h3>
                 <div class="display-img" id="img-modale"></div>
-                <button>Ajouter une photo</button>
-                <a>Supprimer la galerie</a>
+				<div class="border"></div>
+                <button class="btn-ajouter">Ajouter une photo</button>
+                <a class="suppr">Supprimer la galerie</a>
             </div>
+			<div class="modal-add" style="display: none;">
+				<i class="fa-solid fa-arrow-left fa-2x flèche-gauche"></i>
+				<h3 id="titlemodal">Ajout photo</h3>
+				<div class="choisir-photo">
+					<i class="fa-regular fa-image fa-4x"></i>
+					<button class="bouton-add-photo">+ Ajouter photo</button>
+					<p class="indication">jpg,png : 4mo max</p>
+				</div>
+				<form action="#" method="post" class="form-modal">
+					<label for="title" id="label-titre">Titre</label>
+					<input type="text" name="title" id="title-input">
+					<label for="Catégorie-id" id="catégorie-id">Catégorie</label>
+					<select name="Catégorie" id="select-catégorie">
+						<option value=""></option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+					</select>
+					<div class="border"></div>
+					<button class="btn-valider">Valider</button>
+				</form>
+			</div>
         </aside>
 
 		<div class="filtres">

@@ -211,6 +211,7 @@ const modaleEl = async () => {
         let NewFigure = document.createElement("figure");
         NewFigure.innerHTML = `
         <img src = "${worksData[index].imageUrl}" class="image-modale">
+        <i class="fa-solid fa-trash-can"></i>
         <p>éditer</p>
         `;
         index++;
@@ -220,3 +221,54 @@ const modaleEl = async () => {
 };
 
 modaleEl();
+
+
+
+let modal = null
+
+
+
+const openModal = function (e) {
+    e.preventDefault()
+    const target = document.querySelector(e.target.getAttribute('href'))
+    target.style.display = null
+    target.removeAttribute('aria-hidden')
+    target.setAttribute('aria-modal', 'true')
+    const body = document.querySelector("body");
+    body.classList.add("shadow-body");
+    modal = target
+    modal.addEventListener('click', closeModal)
+    modal.querySelector('.close').addEventListener('click', closeModal)
+    modal.querySelector('.modal-wrapper').addEventListener('click', stopPropagation)
+}
+
+const closeModal = function(e) {
+    if(modal === null) return
+    e.preventDefault()
+    modal.style.display = "none"
+    modal.setAttribute('aria-hidden', 'true')
+    modal.removeAttribute('aria-modal')
+    const body = document.querySelector("body");
+    body.classList.remove("shadow-body");
+    modal.removeEventListener('click', closeModal)
+    modal.querySelector('.close').removeEventListener('click', closeModal)
+    modal.querySelector('.modal-wrapper').removeEventListener('click', stopPropagation)
+    modal = null
+}
+
+const stopPropagation = function (e) {
+    e.stopPropagation()
+}
+
+
+
+document.querySelectorAll('#btn-modif').forEach(a => {
+    a.addEventListener('click', openModal)
+})
+
+
+window.addEventListener('keydown', function(e) {
+    if(e.key === "Escape" || e.key === "Esc") {
+        closeModal(e)
+    }
+})
