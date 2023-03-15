@@ -235,25 +235,31 @@ const openModal = function (e) {
     target.removeAttribute('aria-hidden')
     target.setAttribute('aria-modal', 'true')
     const body = document.querySelector("body");
+    const galeryEl = document.querySelector(".gallery")
+    const imgSophieEl = document.getElementById("imgSophie")
+    const formProjetEL = document.getElementById("form-projet")
     body.classList.add("shadow-body");
-    modal = target
-    modal.addEventListener('click', closeModal)
-    modal.querySelector('.close').addEventListener('click', closeModal)
-    modal.querySelector('.modal-wrapper').addEventListener('click', stopPropagation)
+    galeryEl.classList.add("opacityIMG");
+    imgSophieEl.classList.add("opacityIMG");
+    formProjetEL.classList.add("opacityIMG");
+    const croixEl = document.getElementById('croix-close');
+    croixEl.addEventListener('click', closeModal)
 }
 
 const closeModal = function(e) {
-    if(modal === null) return
     e.preventDefault()
-    modal.style.display = "none"
-    modal.setAttribute('aria-hidden', 'true')
-    modal.removeAttribute('aria-modal')
+    const modalEl = document.getElementById('modal1')
+    modalEl.style.display = "none"
+    modalEl.setAttribute('aria-hidden', 'true')
+    modalEl.removeAttribute('aria-modal')
     const body = document.querySelector("body");
+    const galeryEl = document.querySelector(".gallery")
+    const imgSophieEl = document.getElementById("imgSophie")
+    const formProjetEL = document.getElementById("form-projet")
+    imgSophieEl.classList.remove("opacityIMG");
     body.classList.remove("shadow-body");
-    modal.removeEventListener('click', closeModal)
-    modal.querySelector('.close').removeEventListener('click', closeModal)
-    modal.querySelector('.modal-wrapper').removeEventListener('click', stopPropagation)
-    modal = null
+    galeryEl.classList.remove("opacityIMG");
+    formProjetEL.classList.remove("opacityIMG");
 }
 
 const stopPropagation = function (e) {
@@ -272,3 +278,91 @@ window.addEventListener('keydown', function(e) {
         closeModal(e)
     }
 })
+
+
+// Modale 2
+
+
+const openModal2 = function(e) {
+    e.preventDefault()
+    const modal1 = document.getElementById('modale1')
+    const modal2 = document.getElementById('modal2')
+    modal1.style.display = "none"
+    modal2.style.display = "flex"
+};
+
+
+document.querySelectorAll('.btn-ajouter').forEach(button => {
+    button.addEventListener('click', openModal2)
+})
+
+const closeModal2 = function(e) {
+    e.preventDefault()
+    const modal1 = document.getElementById('modale1')
+    const modal2 = document.getElementById('modal2')
+    modal1.style.display = "flex"
+    modal2.style.display = "none"
+};
+
+
+document.querySelectorAll('#arrowLeft').forEach(i => {
+    i.addEventListener('click', closeModal2)
+})
+
+// image input File
+
+const input = document.querySelector('input[type="file"]')
+
+input.addEventListener('change', function(e){
+    console.log(input.files)
+    const reader = new FileReader()
+    reader.onload = function(){
+        const img = document.getElementById('imgInput')
+        img.src = reader.result
+    }
+    reader.readAsDataURL(input.files[0])
+
+    const faImage = document.getElementById('faImage')
+    const inputLabel = document.getElementById('labelInputImg')
+    const indicationEl = document.getElementById('indication')
+    const img = document.getElementById('imgInput')
+
+    img.style.display = "flex"
+    faImage.classList.add("none")
+    inputLabel.classList.add("none")
+    indicationEl.classList.add("none")
+
+}, false)
+
+
+
+// POST Ajout Photo
+
+const formAjoutIMGEl = document.getElementById('formAjoutIMG');
+
+
+formAjoutIMGEl.addEventListener('submit', async function(e){
+    const data = new FormData(form);
+    const response = await login(data);
+    const user = await response.json();
+    console.log(user);
+});
+
+const envoie = async (data) => {
+
+    const ajout = {
+        image: data.get('file'),
+        title: data.get('text'),
+        category: data.get('number')
+    };
+
+
+    return await fetch('http://localhost:5678/api/works', {
+        method: "POST",
+        headers: {
+            'accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+        },
+        body: JSON.stringify()
+    })
+}

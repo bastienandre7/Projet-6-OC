@@ -25,7 +25,7 @@
 <main>
 	<section id="introduction">
 		<figure>
-			<img src="./assets/images/sophie-bluel.png" alt="">
+			<img id="imgSophie" src="./assets/images/sophie-bluel.png" alt="sophie bluel">
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -44,34 +44,42 @@
         </div>
 
         <aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal" style="display: none;">
-            <div class="modal-wrapper" style="display: flex;">
-				<i class="fa-solid fa-xmark fa-2x close"></i>
+
+            <div id="modale1" class="modal-wrapper" style="display: flex;">
+				<i id="croix-close" class="fa-solid fa-xmark fa-2x close"></i>
                 <h3 id="titlemodal">Galerie photo</h3>
                 <div class="display-img" id="img-modale"></div>
 				<div class="border"></div>
                 <button class="btn-ajouter">Ajouter une photo</button>
                 <a class="suppr">Supprimer la galerie</a>
             </div>
-			<div class="modal-add" style="display: none;">
-				<i class="fa-solid fa-arrow-left fa-2x flèche-gauche"></i>
+
+			<div id="modal2"  class="modal-add" style="display: none;">
+				<i id="arrowLeft" class="fa-solid fa-arrow-left fa-2x flèche-gauche"></i>
 				<h3 id="titlemodal">Ajout photo</h3>
-				<div class="choisir-photo">
-					<i class="fa-regular fa-image fa-4x"></i>
-					<button class="bouton-add-photo">+ Ajouter photo</button>
-					<p class="indication">jpg,png : 4mo max</p>
-				</div>
-				<form action="#" method="post" class="form-modal">
-					<label for="title" id="label-titre">Titre</label>
-					<input type="text" name="title" id="title-input">
-					<label for="Catégorie-id" id="catégorie-id">Catégorie</label>
-					<select name="Catégorie" id="select-catégorie">
-						<option value=""></option>
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-					</select>
-					<div class="border"></div>
-					<button class="btn-valider">Valider</button>
+
+				<form action="#" method="post" id="formAjoutIMG">
+					<div class="choisir-photo">
+						<i class="fa-regular fa-image fa-4x" id="faImage"></i>
+						<img id="imgInput" style="display: none;">
+						<label for="inputFile" class="bouton-add-photo" id="labelInputImg">+ Ajouter photo</label>
+						<input id="inputFile" name="inputFile" class="none" type="file" accept=".jpg, .png" required>
+						<p class="indication" id="indication">jpg,png : 4mo max</p>
+					</div>
+
+					<div class="form-modal">
+						<label for="title" id="label-titre">Titre</label>
+						<input type="text" name="title" id="title-input" required>
+						<label for="Catégorie-id" id="catégorie-id">Catégorie</label>
+						<select type="number" name="Catégorie" id="select-catégorie"  required>
+							<option value=""></option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+						</select>
+						<div class="border"></div>
+						<button type="submit" class="btn-valider">Valider</button>
+					</div>
 				</form>
 			</div>
         </aside>
@@ -87,7 +95,7 @@
 	<section id="contact">
 		<h2>Contact</h2>
 		<p>Vous avez un projet ? Discutons-en !</p>
-		<form action="#" method="post">
+		<form action="#" method="post" id="form-projet">
 			<label for="name">Nom</label>
 			<input type="text" name="name" id="name">
 			<label for="email">Email</label>
