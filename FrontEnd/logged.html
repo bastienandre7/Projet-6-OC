@@ -13,6 +13,13 @@
 </head>
 <body>
 <header>
+	<div class="mode-edition">
+		<div class="display-edition">
+			<i class="fa-regular fa-pen-to-square fa-1x stylo"></i>
+			<p class="txt-edition">Mode édition</p>
+		</div>
+		<button class="btn-header">publier les changements</button>
+	</div>
 	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
 	<nav>
 		<ul>
@@ -63,7 +70,7 @@
 						<i class="fa-regular fa-image fa-4x" id="faImage"></i>
 						<img id="imgInput" style="display: none;">
 						<label for="inputFile" class="bouton-add-photo" id="labelInputImg">+ Ajouter photo</label>
-						<input id="inputFile" name="inputFile" class="none" type="file" accept=".jpg, .png" required>
+						<input id="inputFile" name="image" class="none" type="file" accept=".jpg, .png" required>
 						<p class="indication" id="indication">jpg,png : 4mo max</p>
 					</div>
 
@@ -71,7 +78,7 @@
 						<label for="title" id="label-titre">Titre</label>
 						<input type="text" name="title" id="title-input" required>
 						<label for="Catégorie-id" id="catégorie-id">Catégorie</label>
-						<select type="number" name="Catégorie" id="select-catégorie"  required>
+						<select type="number" name="category" id="select-catégorie"  required>
 							<option value=""></option>
 							<option value="1">1</option>
 							<option value="2">2</option>

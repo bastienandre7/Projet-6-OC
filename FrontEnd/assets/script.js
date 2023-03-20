@@ -198,29 +198,111 @@ btnHotelEl.addEventListener("click", function(){
     btnHotelVert();
 });
 
+
+// Logged
+
+let logged = sessionStorage.getItem('user');
+
+if( logged != null){
+    const modifier = document.getElementById('modifier');
+    modifier.classList.add('liens-modifier');
+    let boutonModifEl = document.createElement("div");
+    boutonModifEl.classList.add('display-modifier');
+    boutonModifEl.innerHTML = `
+    <a id="btn-modif" href="#modal1" class="btnmodal"><i class="fa-regular fa-pen-to-square"></i> modifier</a>
+    `;
+    modifier.appendChild(boutonModifEl);
+    let modale = document.getElementById("modal1");
+    modale.innerHTML = `
+        <div id="modale1" class="modal-wrapper" style="display: flex;">
+			<i id="croix-close" class="fa-solid fa-xmark fa-2x close"></i>
+            <h3 id="titlemodal">Galerie photo</h3>
+            <div class="display-img" id="img-modale"></div>
+			<div class="border"></div>
+            <button class="btn-ajouter">Ajouter une photo</button>
+            <a class="suppr" id="supprGalerie">Supprimer la galerie</a>
+        </div>
+
+		<div id="modal2"  class="modal-add" style="display: none;">
+			<i id="arrowLeft" class="fa-solid fa-arrow-left fa-2x flèche-gauche"></i>
+			<h3 id="titlemodal">Ajout photo</h3>
+
+			<form action="#" method="post" id="formAjoutIMG">
+				<div class="choisir-photo">
+					<i class="fa-regular fa-image fa-4x" id="faImage"></i>
+					<img id="imgInput" style="display: none;">
+					<label for="inputFile" class="bouton-add-photo" id="labelInputImg">+ Ajouter photo</label>
+					<input id="inputFile" name="image" class="none" type="file" accept=".jpg, .png" required>
+					<p class="indication" id="indication">jpg,png : 4mo max</p>
+				</div>
+
+				<div class="form-modal">
+					<label for="title" id="label-titre">Titre</label>
+					<input type="text" name="title" id="title-input" required>
+					<label for="Catégorie-id" id="catégorie-id">Catégorie</label>
+					<select type="number" name="category" id="select-catégorie"  required>
+						<option value=""></option>
+						<option value="1">Objets</option>
+						<option value="2">Appartements</option>
+						<option value="3">Hotels & restaurants</option>
+					</select>
+					<div class="border"></div>
+						<button type="submit" class="btn-valider">Valider</button>
+				</div>
+			</form>
+	    </div>
+    `;
+};
+
+
 // MODALE
 
-const modaleEl = async () => {
+async function modaleEl() {
     await fetchWorks();
 
     const modaleEL = document.getElementById("img-modale");
 
     index = 0;
 
-    for (let imageUrl of worksData){
+    for (let imageUrl of worksData) {
         let NewFigure = document.createElement("figure");
+        NewFigure.classList.add("display-figure");
         NewFigure.innerHTML = `
-        <img src = "${worksData[index].imageUrl}" class="image-modale">
-        <i class="fa-solid fa-trash-can"></i>
+        <img src = "${worksData[index].imageUrl}" class="image-modale" >
         <p>éditer</p>
         `;
+
+
+        let trashIcone = document.createElement("i");
+        trashIcone.classList.add("fa-solid", "fa-trash-can");
+        trashIcone.id = worksData[index].id;
+        trashIcone.addEventListener("click", function(){
+            console.log(trashIcone.id)
+            const token = sessionStorage.getItem('user');
+            const headers = new Headers();
+            headers.append('Authorization', `Bearer ${token}`)
+            fetch (`http://localhost:5678/api/works/${trashIcone.id}`, {
+                method: "DELETE",
+                headers,
+            })
+            .then((reponse) => reponse.json())
+            .then((json) => alert("L'image a bien été supprimé"))
+        })
+
+        
         index++;
 
+        NewFigure.appendChild(trashIcone);
         modaleEL.appendChild(NewFigure);
-    }
+    };
+
+    
+
 };
 
+
 modaleEl();
+
 
 
 
@@ -277,7 +359,11 @@ window.addEventListener('keydown', function(e) {
     if(e.key === "Escape" || e.key === "Esc") {
         closeModal(e)
     }
-})
+});
+
+
+
+
 
 
 // Modale 2
@@ -342,27 +428,24 @@ const formAjoutIMGEl = document.getElementById('formAjoutIMG');
 
 
 formAjoutIMGEl.addEventListener('submit', async function(e){
-    const data = new FormData(form);
-    const response = await login(data);
+    e.preventDefault();
+    const data = new FormData(formAjoutIMGEl);
+    const response = await envoie(data);
     const user = await response.json();
     console.log(user);
+    console.log(response);
 });
 
 const envoie = async (data) => {
+const token = sessionStorage.getItem('user');
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${token}`)
 
-    const ajout = {
-        image: data.get('file'),
-        title: data.get('text'),
-        category: data.get('number')
-    };
 
 
     return await fetch('http://localhost:5678/api/works', {
         method: "POST",
-        headers: {
-            'accept': 'application/json',
-            'Content-Type': 'multipart/form-data',
-        },
-        body: JSON.stringify()
+        headers,
+        body: data
     })
 }

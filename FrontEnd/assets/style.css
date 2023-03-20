@@ -56,8 +56,10 @@ body {
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 60px 0
 }
+
+
 section {
 	margin: 50px 0
 }
@@ -283,6 +285,48 @@ footer nav ul {
 
 /* Modale 1 */
 
+.mode-edition{
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 50px;
+	background-color: black;
+}
+
+.stylo{
+	color: white;
+	padding-left: 10px;
+}
+
+.txt-edition{
+	color: white;
+	margin-left: 10px;
+}
+
+.display-edition{
+	display: flex;
+	flex-direction: row;
+	padding-right: 20px;
+	padding-top: 18px;
+}
+
+.btn-header{
+	background-color: white;
+	color: black;
+	border-radius: 25px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	border: none;
+	font-weight: 700;
+	cursor: pointer;
+}
+
 .liens-modifier{
 	display: flex;
 	justify-content: center;
@@ -292,6 +336,14 @@ footer nav ul {
 	padding-left: 20px;
 	padding-top: 7px;
 	font-size: large;
+	width: 100px;
+	display: flex;
+}
+
+.pen{
+	color: black;
+	display: flex;
+	visibility: visible;
 }
 
 .btnmodal{
@@ -325,10 +377,31 @@ footer nav ul {
 	justify-content: center;
 }
 
+.display-figure{
+	position: relative;
+}
+
 .image-modale{
 	width: 80px;
 	height: 100px;
 	display: flex;
+}
+
+.fa-trash-can{
+	cursor: pointer;
+	position: absolute;
+	top: 5%;
+	right: 0%;
+	color: white;
+	background-color: black;
+	padding: 6px;
+	border-radius: 5px;
+}
+
+#poubelle{
+	border: none;
+	width: 0px;
+	height: 0px;
 }
 
 .close {
@@ -394,11 +467,6 @@ footer nav ul {
 	z-index: 0;
 }
 
-.fa-trash-can{
-	cursor: pointer;
-	top: 100px;
-	
-}
 
 
 /* Modale 2 */

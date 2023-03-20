@@ -21,7 +21,7 @@ form.addEventListener('submit', async function(e){
 
     if(response.status === 200){
         sessionStorage.setItem("user", user.token);
-        window.location.assign("logged.html")
+        window.location.assign("index.html")
     }
 
 
