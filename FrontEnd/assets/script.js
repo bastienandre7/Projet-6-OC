@@ -204,6 +204,13 @@ btnHotelEl.addEventListener("click", function(){
 let logged = sessionStorage.getItem('user');
 
 if( logged != null){
+    const cadreImageEl = document.getElementById("cadreImage");
+    let btnModifEl = document.createElement("div");
+    btnModifEl.classList.add('display-modifier', 'pad_modifier');
+    btnModifEl.innerHTML = `
+    <a class="btnmodal"><i class="fa-regular fa-pen-to-square"></i> modifier</a>
+    `;
+    cadreImageEl.appendChild(btnModifEl);
     const modifier = document.getElementById('modifier');
     modifier.classList.add('liens-modifier');
     let boutonModifEl = document.createElement("div");
@@ -252,6 +259,17 @@ if( logged != null){
 			</form>
 	    </div>
     `;
+    const headerEl = document.getElementById("header");
+    let editionEl = document.createElement("div");
+    editionEl.classList.add("mode-edition");
+    editionEl.innerHTML = `
+    <div class="display-edition">
+		<i class="fa-regular fa-pen-to-square fa-1x stylo"></i>
+		<p class="txt-edition">Mode édition</p>
+	</div>
+	<button class="btn-header">publier les changements</button>
+    `;
+    headerEl.appendChild(editionEl);
 };
 
 

@@ -218,6 +218,7 @@ footer nav ul {
 
 /* Log In */
 
+
 .nav {
 	padding: 0 10px;
 	font-size: 1.2em;
@@ -338,6 +339,11 @@ footer nav ul {
 	font-size: large;
 	width: 100px;
 	display: flex;
+}
+
+.pad_modifier{
+	padding-left: 60px;
+	cursor: pointer;
 }
 
 .pen{
