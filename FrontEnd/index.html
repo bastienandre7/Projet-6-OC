@@ -18,7 +18,9 @@
 		<ul>
 			<a class="nav">projets</a>
 			<a class="nav">contact</a>
-			<a class="nav" id="btnLogin" href="/FrontEnd/login.html">login</a>
+			<div id="loginEtLogout">
+				<a class="nav" id="btnLogin" href="/FrontEnd/login.html">login</a>
+			</div>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -41,10 +43,10 @@
 		</div>
 		<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal" style="display: none;"></aside>
 		<div class="filtres">
-			<button class="boutons btn_vert" id="btnTous">Tous</button>
-			<button class="boutons" id="btnObj">Objets</button>
-			<button class="boutons" id="btnAppart">Appartements</button>
-			<button class="boutons" id="btnHotel">Hôtels & restaurants</button>
+			<button class="boutons" id="btnTous" name="Tous" onclick="filtreMenu('Tous')">Tous</button>
+			<button class="boutons" id="btnObj" name="1" onclick="filtreMenu('1')">Objets</button>
+			<button class="boutons" id="btnAppart" name="2" onclick="filtreMenu('2')">Appartements</button>
+			<button class="boutons" id="btnHotel" name="3" onclick="filtreMenu('3')">Hotels & restaurants</button>
 		</div>
 		<div class="gallery" id="galerie"></div>
 	</section>

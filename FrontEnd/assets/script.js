@@ -12,18 +12,21 @@ const fetchWorks = async () => {
     .then(data => worksData = data);
 };
 
+
 const displayTous = async () => {
     await fetchWorks();
-    await deleteAll();
 
+    
     const galerieEL = document.getElementById("galerie");
+
 
     index = 0;
 
-    for (let imageUrl of worksData){
+    for (let i of worksData){
         let NewFigure = document.createElement("figure");
+        NewFigure.classList.add('figure', i.categoryId);
         NewFigure.innerHTML = `
-        <img src = "${worksData[index].imageUrl}">
+        <img src = "${worksData[index].imageUrl}" alt ="${worksData[index].title}" id="${worksData[index].id}">
         <figcaption>${worksData[index].title}</figcaption>
         `;
         index++;
@@ -32,171 +35,43 @@ const displayTous = async () => {
     }
 };
 
+
+
 displayTous();
 
 
-
-
-const displayObj = async () => {
-    await fetchWorks();
-    await deleteAll();
-
-    const galerieEL = document.getElementById("galerie");
-
-    const ObjetFiltre = worksData.filter(objet => objet.categoryId === 1)
-
-    index = 0;
-
-    for (let imageUrl of ObjetFiltre){
-        let NewFigure = document.createElement("figure");
-        NewFigure.innerHTML = `
-        <img src = "${ObjetFiltre[index].imageUrl}">
-        <figcaption>${ObjetFiltre[index].title}</figcaption>
-        `;
-        index++;
-
-        galerieEL.appendChild(NewFigure);
-    }
-};
-
-const displayApps = async () => {
-    await fetchWorks();
-    await deleteAll();
-
-    const galerieEL = document.getElementById("galerie");
-
-    const ObjetFiltre = worksData.filter(objet => objet.categoryId === 2)
-
-    index = 0;
-
-    for (let imageUrl of ObjetFiltre){
-        let NewFigure = document.createElement("figure");
-        NewFigure.innerHTML = `
-        <img src = "${ObjetFiltre[index].imageUrl}">
-        <figcaption>${ObjetFiltre[index].title}</figcaption>
-        `;
-        index++;
-
-        galerieEL.appendChild(NewFigure);
-    }
-};
-
-const displayHotel = async () => {
-    await fetchWorks();
-    await deleteAll();
-
-    const galerieEL = document.getElementById("galerie");
-
-    const ObjetFiltre = worksData.filter(objet => objet.categoryId === 3)
-
-    index = 0;
-
-    for (let imageUrl of ObjetFiltre){
-        let NewFigure = document.createElement("figure");
-        NewFigure.innerHTML = `
-        <img src = "${ObjetFiltre[index].imageUrl}">
-        <figcaption>${ObjetFiltre[index].title}</figcaption>
-        `;
-        index++;
-
-        galerieEL.appendChild(NewFigure);
-    }
-};
-
-
-
-
-
-
-function deleteAll(){
-    btnTousEl.onclick = () => {
-        const galerieEL = document.getElementById("galerie");
-        while (galerieEL.firstChild) {
-            galerieEL.removeChild(galerieEL.firstChild);
+function filtreMenu(value){
+    let buttons = document.querySelectorAll(".boutons");
+    buttons.forEach((button) => {
+        if(value == button.name){
+            button.classList.add("btn_vert")
         }
-    };
-
-    btnObjEl.onclick = () => {
-        const galerieEL = document.getElementById("galerie");
-        while (galerieEL.firstChild) {
-            galerieEL.removeChild(galerieEL.firstChild);
+        else{
+            button.classList.remove("btn_vert")
         }
-    };
+    });
 
-    btnAppartEl.onclick = () => {
-        const galerieEL = document.getElementById("galerie");
-        while (galerieEL.firstChild) {
-            galerieEL.removeChild(galerieEL.firstChild);
+    let elements = document.querySelectorAll(".figure")
+
+    elements.forEach((element) => {
+        if(value == "Tous"){
+            element.classList.remove("none");
         }
-    };
-
-    btnHotelEl.onclick = () => {
-        const galerieEL = document.getElementById("galerie");
-        while (galerieEL.firstChild) {
-            galerieEL.removeChild(galerieEL.firstChild);
+        else{
+            if(element.classList.contains(value)){
+                element.classList.remove("none");
+            }
+            else{
+                element.classList.add("none");
+            }
         }
-    };
-
-};
-
-
-
-
-
-const buttonEl = document.querySelectorAll('.boutons');
-
-function changementVert(){
-    buttonEl.forEach(item => {
-        item.classList.remove('btn_vert');
     })
 }
 
-function btnTousVert(){
-    btnTousEl.classList.add('btn_vert')
-};
-function btnObjVert(){
-    btnObjEl.classList.add('btn_vert')
-};
-function btnAppsVert(){
-    btnAppartEl.classList.add('btn_vert')
-};
-function btnHotelVert(){
-    btnHotelEl.classList.add('btn_vert')
+window.onload = () => {
+    filtreMenu("Tous");
 };
 
-
-
-
-
-
-btnTousEl.addEventListener("click", function(){
-    deleteAll();
-    displayTous();
-    changementVert();
-    btnTousVert();
-});
-
-
-btnObjEl.addEventListener("click", function(){
-    deleteAll();
-    displayObj();
-    changementVert();
-    btnObjVert();
-});
-
-btnAppartEl.addEventListener("click", function(){
-    deleteAll();
-    displayApps();
-    changementVert();
-    btnAppsVert();
-});
-
-btnHotelEl.addEventListener("click", function(){
-    deleteAll();
-    displayHotel();
-    changementVert();
-    btnHotelVert();
-});
 
 
 // Logged
@@ -270,23 +145,49 @@ if( logged != null){
 	<button class="btn-header">publier les changements</button>
     `;
     headerEl.appendChild(editionEl);
+
+
+    const btnLoginEl = document.getElementById("btnLogin");
+    btnLoginEl.classList.add("none");
+    const txtLogout = document.createElement("a");
+    txtLogout.classList.add("nav");
+    txtLogout.textContent = "Logout";
+    loginEtLogout.appendChild(txtLogout);
+    txtLogout.addEventListener('click', function(){
+        logged = null
+    })
 };
 
 
 // MODALE
 
-async function modaleEl() {
+const deleteWork = async(id) => {
+    const token = sessionStorage.getItem('user');
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${token}`)
+    fetch (`http://localhost:5678/api/works/${id}`, {
+        method: "DELETE",
+        headers,
+    })
+    
+    return false;
+
+}
+
+
+
+async function modaleEl(e) {
     await fetchWorks();
 
     const modaleEL = document.getElementById("img-modale");
 
-    index = 0;
+    let index = 0;
 
     for (let imageUrl of worksData) {
         let NewFigure = document.createElement("figure");
         NewFigure.classList.add("display-figure");
         NewFigure.innerHTML = `
-        <img src = "${worksData[index].imageUrl}" class="image-modale" >
+        <img src = "${worksData[index].imageUrl}" alt ="${worksData[index].title}" class="image-modale" >
         <p>éditer</p>
         `;
 
@@ -294,17 +195,11 @@ async function modaleEl() {
         let trashIcone = document.createElement("i");
         trashIcone.classList.add("fa-solid", "fa-trash-can");
         trashIcone.id = worksData[index].id;
-        trashIcone.addEventListener("click", function(){
-            console.log(trashIcone.id)
-            const token = sessionStorage.getItem('user');
-            const headers = new Headers();
-            headers.append('Authorization', `Bearer ${token}`)
-            fetch (`http://localhost:5678/api/works/${trashIcone.id}`, {
-                method: "DELETE",
-                headers,
-            })
-            .then((reponse) => reponse.json())
-            .then((json) => alert("L'image a bien été supprimé"))
+        trashIcone.addEventListener("click", async()=>{
+            // const response = await deleteWork(trashIcone.id)
+            // console.log(response)
+            
+            // return false;
         })
 
         
@@ -312,14 +207,15 @@ async function modaleEl() {
 
         NewFigure.appendChild(trashIcone);
         modaleEL.appendChild(NewFigure);
+
     };
 
-    
 
 };
 
-
 modaleEl();
+
+
 
 
 
