@@ -25,8 +25,9 @@ const displayTous = async () => {
     for (let i of worksData){
         let NewFigure = document.createElement("figure");
         NewFigure.classList.add('figure', i.categoryId);
+        NewFigure.id = worksData[index].id;
         NewFigure.innerHTML = `
-        <img src = "${worksData[index].imageUrl}" alt ="${worksData[index].title}" id="${worksData[index].id}">
+        <img src = "${worksData[index].imageUrl}" alt ="${worksData[index].title}">
         <figcaption>${worksData[index].title}</figcaption>
         `;
         index++;
@@ -142,7 +143,7 @@ if( logged != null){
 		<i class="fa-regular fa-pen-to-square fa-1x stylo"></i>
 		<p class="txt-edition">Mode édition</p>
 	</div>
-	<button class="btn-header">publier les changements</button>
+	<button class="btn-header" id="btnChanges">publier les changements</button>
     `;
     headerEl.appendChild(editionEl);
 
@@ -170,9 +171,11 @@ const deleteWork = async(id) => {
         headers,
     })
     
-    return false;
+    return false
+    
 
-}
+};
+
 
 
 
@@ -183,7 +186,7 @@ async function modaleEl(e) {
 
     let index = 0;
 
-    for (let imageUrl of worksData) {
+    for (let i of worksData) {
         let NewFigure = document.createElement("figure");
         NewFigure.classList.add("display-figure");
         NewFigure.innerHTML = `
@@ -194,12 +197,15 @@ async function modaleEl(e) {
 
         let trashIcone = document.createElement("i");
         trashIcone.classList.add("fa-solid", "fa-trash-can");
-        trashIcone.id = worksData[index].id;
+        NewFigure.id = worksData[index].id;
         trashIcone.addEventListener("click", async()=>{
-            // const response = await deleteWork(trashIcone.id)
-            // console.log(response)
             
-            // return false;
+            const deleteEl = document.querySelectorAll('[id^="' + NewFigure.id + '"]');
+            console.log(deleteEl);
+            for(i = 0; i < deleteEl.length; i++) {
+                // deleteEl[i].classList.add("none")
+                deleteEl[i].remove();
+            }
         })
 
         
@@ -216,12 +222,16 @@ async function modaleEl(e) {
 modaleEl();
 
 
+const btnChangesEl = document.getElementById("btnChanges");
+
+btnChangesEl.addEventListener('click', function(){
+
+})
 
 
 
 
 let modal = null
-
 
 
 const openModal = function (e) {
@@ -363,3 +373,5 @@ const token = sessionStorage.getItem('user');
         body: data
     })
 }
+
+
