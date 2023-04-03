@@ -2,6 +2,7 @@ const btnTousEl = document.getElementById("btnTous");
 const btnObjEl = document.getElementById("btnObj");
 const btnAppartEl = document.getElementById("btnAppart");
 const btnHotelEl = document.getElementById("btnHotel");
+const galerieEL = document.getElementById("galerie");
 
 
 let worksData = [];
@@ -17,7 +18,6 @@ const displayTous = async () => {
     await fetchWorks();
 
     
-    const galerieEL = document.getElementById("galerie");
 
 
     index = 0;
@@ -79,7 +79,7 @@ window.onload = () => {
 
 let logged = sessionStorage.getItem('user');
 
-if( logged != null){
+if( logged !== null){
     const cadreImageEl = document.getElementById("cadreImage");
     let btnModifEl = document.createElement("div");
     btnModifEl.classList.add('display-modifier', 'pad_modifier');
@@ -166,12 +166,11 @@ const deleteWork = async(id) => {
     const token = sessionStorage.getItem('user');
     const headers = new Headers();
     headers.append('Authorization', `Bearer ${token}`)
-    fetch (`http://localhost:5678/api/works/${id}`, {
+    return await fetch (`http://localhost:5678/api/works/${id}`, {
         method: "DELETE",
         headers,
     })
     
-    return false
     
 
 };
@@ -199,12 +198,12 @@ async function modaleEl(e) {
         trashIcone.classList.add("fa-solid", "fa-trash-can");
         NewFigure.id = worksData[index].id;
         trashIcone.addEventListener("click", async()=>{
-            
-            const deleteEl = document.querySelectorAll('[id^="' + NewFigure.id + '"]');
-            console.log(deleteEl);
-            for(i = 0; i < deleteEl.length; i++) {
-                // deleteEl[i].classList.add("none")
-                deleteEl[i].remove();
+            const response = await deleteWork(NewFigure.id);
+            if(response.status === 204){
+                const deleteEl = document.querySelectorAll('[id^="' + NewFigure.id + '"]');
+                for(i = 0; i < deleteEl.length; i++) {
+                    deleteEl[i].remove();
+                }
             }
         })
 
@@ -219,14 +218,11 @@ async function modaleEl(e) {
 
 };
 
-modaleEl();
+if(logged !== null){
+    modaleEl();
+}
 
 
-const btnChangesEl = document.getElementById("btnChanges");
-
-btnChangesEl.addEventListener('click', function(){
-
-})
 
 
 
@@ -252,8 +248,7 @@ const openModal = function (e) {
     croixEl.addEventListener('click', closeModal)
 }
 
-const closeModal = function(e) {
-    e.preventDefault()
+const closeModal = function() {
     const modalEl = document.getElementById('modal1')
     modalEl.style.display = "none"
     modalEl.setAttribute('aria-hidden', 'true')
@@ -306,8 +301,7 @@ document.querySelectorAll('.btn-ajouter').forEach(button => {
     button.addEventListener('click', openModal2)
 })
 
-const closeModal2 = function(e) {
-    e.preventDefault()
+const closeModal2 = function() {
     const modal1 = document.getElementById('modale1')
     const modal2 = document.getElementById('modal2')
     modal1.style.display = "flex"
@@ -322,27 +316,65 @@ document.querySelectorAll('#arrowLeft').forEach(i => {
 // image input File
 
 const input = document.querySelector('input[type="file"]')
-
-input.addEventListener('change', function(e){
-    console.log(input.files)
-    const reader = new FileReader()
-    reader.onload = function(){
+if(input !== null){
+    input.addEventListener('change', function(e){
+        const reader = new FileReader()
+        reader.onload = function(){
+            const img = document.getElementById('imgInput')
+            img.src = reader.result
+        }
+        reader.readAsDataURL(input.files[0])
+    
+        const faImage = document.getElementById('faImage')
+        const inputLabel = document.getElementById('labelInputImg')
+        const indicationEl = document.getElementById('indication')
         const img = document.getElementById('imgInput')
-        img.src = reader.result
-    }
-    reader.readAsDataURL(input.files[0])
+    
+        img.style.display = "flex"
+        faImage.classList.add("none")
+        inputLabel.classList.add("none")
+        indicationEl.classList.add("none")
+    
+    }, false)
+}
 
+// reset form
+
+function resetForm(){
+    const formAjoutIMGEl = document.getElementById('formAjoutIMG').reset();
+    
     const faImage = document.getElementById('faImage')
-    const inputLabel = document.getElementById('labelInputImg')
-    const indicationEl = document.getElementById('indication')
-    const img = document.getElementById('imgInput')
+        const inputLabel = document.getElementById('labelInputImg')
+        const indicationEl = document.getElementById('indication')
+        const img = document.getElementById('imgInput')
+    
+        img.style.display = "none"
+        faImage.classList.remove("none")
+        inputLabel.classList.remove("none")
+        indicationEl.classList.remove("none")
+};
 
-    img.style.display = "flex"
-    faImage.classList.add("none")
-    inputLabel.classList.add("none")
-    indicationEl.classList.add("none")
 
-}, false)
+
+// Fonction tout supprimer
+
+function deleteAll(){
+    const figureEl = document.querySelectorAll('.figure');
+    figureEl.forEach(figure =>  {
+        figure.remove();
+    })
+};
+
+// fonction supprimer éléments de la modale 1
+
+function resetModale(){
+    const figureModaleEl = document.querySelectorAll('.display-figure');
+    figureModaleEl.forEach(figure =>  {
+        figure.remove();
+    })
+};
+
+
 
 
 
@@ -350,15 +382,24 @@ input.addEventListener('change', function(e){
 
 const formAjoutIMGEl = document.getElementById('formAjoutIMG');
 
+if(formAjoutIMGEl !== null){
+    formAjoutIMGEl.addEventListener('submit', async function(e){
+        e.preventDefault();
+        const data = new FormData(formAjoutIMGEl);
+        const response = await envoie(data);
+        const user = await response.json();
+        if(response.status == 201){
+            deleteAll();
+            displayTous();
+            closeModal();
+            resetForm();
+            closeModal2();
+            resetModale();
+            modaleEl();
+        }
+    });
+}
 
-formAjoutIMGEl.addEventListener('submit', async function(e){
-    e.preventDefault();
-    const data = new FormData(formAjoutIMGEl);
-    const response = await envoie(data);
-    const user = await response.json();
-    console.log(user);
-    console.log(response);
-});
 
 const envoie = async (data) => {
 const token = sessionStorage.getItem('user');
