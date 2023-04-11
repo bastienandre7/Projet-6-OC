@@ -41,6 +41,10 @@ const displayTous = async () => {
 displayTous();
 
 
+
+// Filtres
+
+
 function filtreMenu(value){
     let buttons = document.querySelectorAll(".boutons");
     buttons.forEach((button) => {
@@ -75,9 +79,10 @@ window.onload = () => {
 
 
 
-// Logged
+// Logged / Création des éléments une fois connecté
 
 let logged = sessionStorage.getItem('user');
+
 
 if( logged !== null){
     const cadreImageEl = document.getElementById("cadreImage");
@@ -151,16 +156,21 @@ if( logged !== null){
     const btnLoginEl = document.getElementById("btnLogin");
     btnLoginEl.classList.add("none");
     const txtLogout = document.createElement("a");
-    txtLogout.classList.add("nav");
+    txtLogout.classList.add("nav", "logout");
     txtLogout.textContent = "Logout";
     loginEtLogout.appendChild(txtLogout);
-    txtLogout.addEventListener('click', function(){
-        logged = null
-    })
+    const logOutEl = document.querySelector(".logout")
+    logOutEl.addEventListener('click', function(){
+        let logOute = sessionStorage.removeItem("user");
+        location.reload();
+    });
+
+    const filtresEl = document.getElementById("idFiltres");
+    filtresEl.classList.add("none");
 };
 
 
-// MODALE
+// Fonction suppression projet
 
 const deleteWork = async(id) => {
     const token = sessionStorage.getItem('user');
@@ -176,6 +186,7 @@ const deleteWork = async(id) => {
 };
 
 
+// Création Galerie Modal
 
 
 async function modaleEl(e) {
@@ -224,7 +235,7 @@ if(logged !== null){
 
 
 
-
+// Ouverture Modal
 
 
 let modal = null
@@ -247,6 +258,8 @@ const openModal = function (e) {
     const croixEl = document.getElementById('croix-close');
     croixEl.addEventListener('click', closeModal)
 }
+
+// Fermeture Modal
 
 const closeModal = function() {
     const modalEl = document.getElementById('modal1')
@@ -285,7 +298,7 @@ window.addEventListener('keydown', function(e) {
 
 
 
-// Modale 2
+// Modal 2
 
 
 const openModal2 = function(e) {
@@ -301,11 +314,32 @@ document.querySelectorAll('.btn-ajouter').forEach(button => {
     button.addEventListener('click', openModal2)
 })
 
+// reset form
+
+function resetForm(){
+    const formAjoutIMGEl = document.getElementById('formAjoutIMG').reset();
+    
+    const faImage = document.getElementById('faImage')
+        const inputLabel = document.getElementById('labelInputImg')
+        const indicationEl = document.getElementById('indication')
+        const img = document.getElementById('imgInput')
+    
+        img.style.display = "none"
+        faImage.classList.remove("none")
+        inputLabel.classList.remove("none")
+        indicationEl.classList.remove("none")
+};
+
+
+
+// Fermeture Modal 2
+
 const closeModal2 = function() {
     const modal1 = document.getElementById('modale1')
     const modal2 = document.getElementById('modal2')
     modal1.style.display = "flex"
     modal2.style.display = "none"
+    resetForm();
 };
 
 
@@ -313,7 +347,7 @@ document.querySelectorAll('#arrowLeft').forEach(i => {
     i.addEventListener('click', closeModal2)
 })
 
-// image input File
+// image input File Modal 2
 
 const input = document.querySelector('input[type="file"]')
 if(input !== null){
@@ -338,21 +372,6 @@ if(input !== null){
     }, false)
 }
 
-// reset form
-
-function resetForm(){
-    const formAjoutIMGEl = document.getElementById('formAjoutIMG').reset();
-    
-    const faImage = document.getElementById('faImage')
-        const inputLabel = document.getElementById('labelInputImg')
-        const indicationEl = document.getElementById('indication')
-        const img = document.getElementById('imgInput')
-    
-        img.style.display = "none"
-        faImage.classList.remove("none")
-        inputLabel.classList.remove("none")
-        indicationEl.classList.remove("none")
-};
 
 
 

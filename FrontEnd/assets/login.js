@@ -8,7 +8,6 @@ form.addEventListener('submit', async function(e){
     const data = new FormData(form);
     const response = await login(data);
     const user = await response.json();
-    console.log(user);
     
     if(response.status === 404 || response.status === 401){
         const erreur = document.getElementById("erreur");
